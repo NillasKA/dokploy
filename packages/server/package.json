@@ -30,6 +30,7 @@
     "generate:drizzle": "pnpm dlx  @better-auth/cli generate --output auth-schema2.ts --config src/lib/auth-cli.ts"
   },
   "dependencies": {
+    "@1password/sdk": "^0.5.0",
     "@ai-sdk/anthropic": "^3.0.44",
     "@ai-sdk/azure": "^3.0.30",
     "@ai-sdk/cohere": "^3.0.21",
@@ -82,7 +83,7 @@
     "react-dom": "19.2.7",
     "resend": "^6.0.2",
     "semver": "7.7.3",
-    "shell-quote": "^1.8.1",
+    "shell-quote": "^1.8.4",
     "slugify": "^1.6.6",
     "ssh2": "~1.16.0",
     "toml": "3.0.0",
