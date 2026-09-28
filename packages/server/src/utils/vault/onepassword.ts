@@ -1,6 +1,6 @@
 import type { onePasswordEnvironmentConfigSchema } from "@dokploy/server/db/schema";
 import type { z } from "zod";
-import type { VaultClient } from "./types";
+import { type VaultClient, withVaultRequestTimeout } from "./types";
 
 type OnePasswordConfig = z.infer<typeof onePasswordEnvironmentConfigSchema>;
 
@@ -11,7 +11,10 @@ const getVariables = async (config: OnePasswordConfig) => {
 		integrationName: "Dokploy",
 		integrationVersion: "1.0.0",
 	});
-	const response = await client.environments.getVariables(config.environmentId);
+	const response = await withVaultRequestTimeout(
+		client.environments.getVariables(config.environmentId),
+		"1Password",
+	);
 	return response.variables;
 };
 

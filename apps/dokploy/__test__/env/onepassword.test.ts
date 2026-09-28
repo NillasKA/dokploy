@@ -51,4 +51,16 @@ describe("1Password Environments provider", () => {
 		await onePasswordClient.testConnection(config);
 		expect(sdk.getVariables).toHaveBeenCalledExactlyOnceWith("environment-id");
 	});
+
+	it("times out when 1Password does not respond", async () => {
+		vi.useFakeTimers();
+		sdk.getVariables.mockImplementationOnce(() => new Promise(() => {}));
+		const request = onePasswordClient.getSecrets(config, ["API_KEY"]);
+		const expectation = expect(request).rejects.toThrow(
+			"1Password: request timed out after 15 seconds",
+		);
+		await vi.advanceTimersByTimeAsync(15_000);
+		await expectation;
+		vi.useRealTimers();
+	});
 });
