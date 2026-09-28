@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: dokploy/dokploy
+  IMAGE_NAME: nillaska/dokploy
 
 permissions:
   contents: read
@@ -145,7 +145,7 @@ jobs:
 
   generate-release:
     needs: [combine-manifests]
-    if: github.ref == 'refs/heads/main'
+    if: github.repository == 'Dokploy/dokploy' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -191,7 +191,7 @@ jobs:
 
   sync-version:
     needs: [generate-release]
-    if: github.ref == 'refs/heads/main'
+    if: github.repository == 'Dokploy/dokploy' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
       NPM_VERSION: ${{ needs.generate-release.outputs.npm_version }}
